@@ -1,0 +1,7 @@
+[server]
+port=8502
+headless=true
+
+[browser] # This ip and port will show in command prompt
+serverAddress = "opensjpd.com"
+serverPort = 80
