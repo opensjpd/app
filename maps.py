@@ -1,5 +1,5 @@
 import streamlit as st
-import arrests
+import tables
 import pandas as pd
 import seaborn as sns
 import constants
@@ -9,7 +9,7 @@ import numpy as np
 def get_coords(query = None):
     geocoding = pd.read_csv('datasets/geocoded.csv', index_col=0)
     # Filter if a query is provided
-    filtered_arrests = arrests.arrests.query(query) if query else arrests.arrests
+    filtered_arrests = tables.arrests().query(query) if query else tables.arrests()
     return (
         filtered_arrests
         .merge(
@@ -29,7 +29,6 @@ def get_coords(query = None):
         .astype({'lat': 'float64', 'lon': 'float64'})
     )
 
-@st.cache
 def map_colors():
     n = constants.race_groups.RACE_GROUP.nunique()
     # There's probably a cleaner way to do this
