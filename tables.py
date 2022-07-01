@@ -30,7 +30,7 @@ def arrests():
 
     df.RACE.fillna('U', inplace=True)
     df.ETHNICITY.fillna('U', inplace=True)
-    
+
     return (
         df
         .replace(constants.race_codes) # Decode RACE
