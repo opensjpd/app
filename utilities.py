@@ -7,10 +7,11 @@ import pandas as pd
 def get_all_officer_names():
     return (
         tables
-        .arrests()
-        .query("`ARREST OFFICER NAME` not in @constants.non_officer_names")
-        ['ARREST OFFICER NAME']
+        .badge_to_name
+        .query("Name not in @constants.non_officer_names")
+        .Name
         .dropna()
+        .sort_values()
         .unique()
     )
 
@@ -18,10 +19,10 @@ def get_all_officer_names():
 def get_badges_by_name(officer_name):
     return (
         tables
-        .arrests()
-        .query("`ARREST OFFICER NAME` == @officer_name")
-        .BADGE
-        .unique()
+        .badge_to_name
+        .query("Name == @officer_name")
+        .index
+        .to_list()
     )
 
 
