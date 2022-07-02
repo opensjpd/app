@@ -5,7 +5,6 @@ import pandas as pd
 
 # Given a column tuple, return a sorted 
 # series of that stat for officers above the median stop count
-@st.cache
 def top_stats(name, column_tuples, percent=True, largest=True):
     s = (
         tables

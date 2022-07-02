@@ -32,7 +32,6 @@ stat_list = {
     'MedianAge': ('AGE', pd.Series.median),
 
     'UniquePersons': ('PIN', 'nunique'),
-    'TopStopReason': ('SUMMARY OF FACTS', pd.Series.mode),
     'UniqueOfficers': ('BADGE', 'nunique'),
 }
 

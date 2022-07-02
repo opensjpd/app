@@ -15,7 +15,7 @@ def age_kdeplot(name, badge):
     fig.set_size_inches(12, 5)
     df = (
         tables
-        .arrests
+        .arrests()
         .assign(group=lambda x: x.BADGE == badge)
         .replace({'group': {True: name.title(), False: 'SJPD'}})
     )
