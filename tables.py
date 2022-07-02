@@ -3,7 +3,7 @@ import pandas as pd
 import scipy.stats
 import constants
 
-#@st.cache
+@st.cache
 def arrests():
     df = (
         pd.read_csv(
@@ -71,7 +71,6 @@ def above_average():
         .index
     )
 
-#@st.cache
 def _get_badge_to_name():
     return (
         arrests()
