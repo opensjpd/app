@@ -3,7 +3,7 @@ import pandas as pd
 import scipy.stats
 import constants
 
-@st.cache
+#@st.cache
 def arrests():
     df = (
         pd.read_csv(
@@ -71,6 +71,17 @@ def above_average():
         .index
     )
 
+#@st.cache
+def _get_badge_to_name():
+    return (
+        arrests()
+        .groupby('BADGE')
+        .agg(
+            Name=('ARREST OFFICER NAME', lambda x: pd.Series.mode(x).get(0))
+        )
+        .fillna('UNKNOWN')
+    )
+
 # Limit to officers with StopCounts above median
 def _get_officer_zscores():
     return (
@@ -115,6 +126,7 @@ def get_stat_medians():
     )
 
 # Globals
+badge_to_name = _get_badge_to_name()
 overall_stats = _generate_stats(arrests(), 'dummy').iloc[0]
 officer_stats = _generate_stats(arrests().query("BADGE not in @constants.non_badges"), 'BADGE')
 medians = get_stat_medians()

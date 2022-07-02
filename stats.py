@@ -19,8 +19,8 @@ def top_stats(name, column_tuples, percent=True, largest=True):
         s = (s*100).astype(int)
 
     # Add officer name with badge number on index
-    #s.index = s.index.map(
-    #    lambda x: f"{utilities.get_name_from_badge(x).title()} #{x}"
-    #)
+    s.index = s.index.map(
+        lambda x: f"{utilities.get_name_from_badge(x).title()} #{x}"
+    )
 
     return s.rename(name)

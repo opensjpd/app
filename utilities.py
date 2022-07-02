@@ -50,4 +50,4 @@ def get_summaries_by_badge(badge):
 
 
 def get_name_from_badge(badge):
-    return tables.arrests().query('BADGE == @badge')['ARREST OFFICER NAME'].mode().iloc[0]
+    return tables.badge_to_name.loc[badge].Name
