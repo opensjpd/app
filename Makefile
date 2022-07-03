@@ -14,4 +14,4 @@ clean:
 	git clean -fxd
 
 test:
-	docker compose -f test/docker-compose.yaml up --build --exit-code-from controller
+	docker compose -f test/docker-compose.yaml up --build --exit-code-from test-runner
