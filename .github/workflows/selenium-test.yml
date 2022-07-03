@@ -1,0 +1,16 @@
+name: Selenium tests
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run selenium pytest
+      run: make test

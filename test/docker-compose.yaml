@@ -1,0 +1,28 @@
+services:
+  selenium:
+    image: selenium/standalone-firefox
+    ports:
+      - "4444:4444"
+    volumes:
+      - "/dev/shm:/dev/shm"
+    healthcheck:
+      test: ["CMD", "/opt/bin/check-grid.sh", "--host", "0.0.0.0", "--port", "4444"]
+      interval: 15s
+      timeout: 30s
+      retries: 5
+
+  app:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    ports:
+      - "8502:8502"
+
+  test-runner:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - selenium
+      - app
+
