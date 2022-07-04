@@ -75,3 +75,20 @@ class TestBasic():
       assert metrics[3].text == data['age']
 
       assert len(self.driver.find_elements(By.TAG_NAME, "img")) == data['img'], f"Wrong number of graphs for {name}"
+
+  def test_unknown_officer(self):
+    self.driver.find_element(By.PARTIAL_LINK_TEXT, "Officer Lookup").click()
+    officer_select = self.driver.find_element(By.TAG_NAME, "input")
+    officer_select.click()
+    officer_select.send_keys('UNKNOWN')
+    officer_select.send_keys(Keys.RETURN)
+
+    time.sleep(2)
+    badge_select = self.driver.find_elements(By.TAG_NAME, "input")[1]
+    badge_select.click()
+    badge_select.send_keys('28')
+    badge_select.send_keys(Keys.DOWN)
+    badge_select.send_keys(Keys.RETURN)
+
+    header = self.driver.find_element(By.TAG_NAME, "h1")
+    assert header.text == 'Officer Unknown (#2864)'
