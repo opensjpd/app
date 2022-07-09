@@ -47,6 +47,7 @@ else:
             st.info(summary)
             if graph:
                 st.pyplot(graph)
+            st.markdown("---")
 
 st.markdown("## Top Reasons for Arrest")
 st.table(utilities.get_summaries_by_badge(selected_badge))

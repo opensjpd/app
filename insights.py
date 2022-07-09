@@ -43,16 +43,16 @@ def get_insights(name, badge):
     if 'Race' in p:
         summary = ""
         if 'AFRICAN AMERICAN' in p.Race and p.Race['AFRICAN AMERICAN'] > upper_bound:
-            summary += f"**{name}** arrested more **Black** people than **{floor(p.Race['AFRICAN AMERICAN']*100)}%** of officers\n"
+            summary += f"**{name}** arrested more **Black** people than **{floor(p.Race['AFRICAN AMERICAN']*100)}%** of officers  \n"
     
         if 'HISPANIC/LATIN/MEXICAN' in p.Race and p.Race['HISPANIC/LATIN/MEXICAN'] > upper_bound:
-            summary += f"**{name}** arrested more **Hispanic or Latinx** people than **{floor(p.Race['HISPANIC/LATIN/MEXICAN']*100)}%** of officers\n"
+            summary += f"**{name}** arrested more **Hispanic or Latinx** people than **{floor(p.Race['HISPANIC/LATIN/MEXICAN']*100)}%** of officers  \n"
         
         if 'ASIAN/PACIFIC ISLANDER' in p.Race and p.Race['ASIAN/PACIFIC ISLANDER'] > upper_bound:
-            summary += f"**{name}** arrested more **Asians or Pacific Islanders** than **{floor(p.Race['ASIAN/PACIFIC ISLANDER']*100)}%** of officers\n"
+            summary += f"**{name}** arrested more **Asians or Pacific Islanders** than **{floor(p.Race['ASIAN/PACIFIC ISLANDER']*100)}%** of officers  \n"
         
         if 'CAUCASIAN' in p.Race and p.Race['CAUCASIAN'] > upper_bound:
-            summary += f"**{name}** arrested more **White** people than **{floor(p.Race['CAUCASIAN']*100)}%** of officers\n"
+            summary += f"**{name}** arrested more **White** people than **{floor(p.Race['CAUCASIAN']*100)}%** of officers  \n"
         
         graph = graphs.race_pie_chart(name, badge)
         insights.append((summary, graph))
