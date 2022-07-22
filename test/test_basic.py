@@ -92,3 +92,16 @@ class TestBasic():
 
     header = self.driver.find_element(By.TAG_NAME, "h1")
     assert header.text == 'Officer Unknown (#2864)'
+
+  def test_beat_map(self):
+    self.driver.find_element(By.PARTIAL_LINK_TEXT, "Beat Map").click()
+    time.sleep(5)
+    self.check_exceptions()
+
+    race_select = self.driver.find_element(By.TAG_NAME, "input")
+    race_select.click()
+    race_select.send_keys('CAUCASIAN')
+    race_select.send_keys(Keys.RETURN)
+
+    time.sleep(2)
+    self.check_exceptions()
