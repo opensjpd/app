@@ -1,45 +1,43 @@
 import streamlit as st
 import pandas as pd
-import pydeck as pdk
-import json
-import seaborn as sns
+import geopandas as gpd
+import tables
+from streamlit_folium import st_folium, folium_static
+
+gdf = gpd.read_file('datasets/shapefiles/Police_Beat.shp')
+arrests = tables.arrests()
+
+beat_vs_race = (
+    pd
+    .crosstab(arrests.BEAT, arrests.RACE_GROUP, normalize='index')
+    .apply(lambda x: (x * 100).round(0))
+)
+
+races = arrests.RACE_GROUP.unique().sort_values()
 
 st.markdown("# Beat Map")
+st.markdown("San José is split into distinct regions known as police beats. \
+    The map shows where people of different races are arrested. For example **{:.0f}%** of arrests made in beat **L6** were of \
+    **Asian Americans or Pacific Islanders**.".format(beat_vs_race.loc['L6']['ASIAN/PACIFIC ISLANDER']))
+with st.sidebar:
+    selected_race = st.selectbox('Color Map by Race', options=races)
 
-beats = pd.read_json('datasets/beats.json')
-beats
+m = (
+    gdf
+    .drop(columns=['ID1', 'AREA'])
+    .merge(
+        beat_vs_race,
+        how='inner',
+        left_on='Beat',
+        right_on='BEAT'
+    )
+    .explore(
+        column=selected_race,
+        legend=True,
+        tooltip=False,
+        popup=['Beat', selected_race],
+        cmap='plasma',
+    )
+)
 
-labels = pd.read_json('datasets/beat_labels.json')
-labels
-
-#with open('datasets/L.geojson') as f:
-#    geo = json.load(f)
-
-st.pydeck_chart(pdk.Deck(
-    map_style='mapbox://styles/mapbox/light-v10',
-    initial_view_state=pdk.ViewState(
-        latitude=37.3391893,
-        longitude=-121.8520819,
-        zoom=11,
-        pitch=0,
-    ),
-    layers=[
-        pdk.Layer(
-            "PolygonLayer",
-            data=beats,
-            get_polygon="polygons",
-            get_fill_color="[31, 119, 180, 50]",
-            get_line_color="[31, 119, 180, 255]",
-            get_line_width=15,
-        ),
-        pdk.Layer(
-            "TextLayer",
-            data=labels,
-            get_text="name",
-            get_position="coordinates",
-            get_size=20
-        )
-    ],
-
-))
-
+folium_static(m)
