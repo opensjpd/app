@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import geopandas as gpd
 import tables
-from streamlit_folium import st_folium, folium_static
+from streamlit_folium import folium_static
 
 gdf = gpd.read_file('datasets/shapefiles/Police_Beat.shp')
 arrests = tables.arrests()
