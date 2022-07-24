@@ -26,7 +26,7 @@ class TestBasic():
     assert len(exceptions) == 0, "Found exception: {}".format(exceptions[0].text)
   
   def test_home(self):
-    assert True
+    assert self.driver.title == "Open SJPD"
 
   def test_officer_lookup(self):
     officers = {
@@ -57,6 +57,7 @@ class TestBasic():
     }
 
     self.driver.find_element(By.PARTIAL_LINK_TEXT, "Officer Lookup").click()
+    assert self.driver.title == "Officer Lookup - Open SJPD"
     self.check_exceptions()
 
     for name, data in officers.items():
@@ -78,6 +79,8 @@ class TestBasic():
 
   def test_unknown_officer(self):
     self.driver.find_element(By.PARTIAL_LINK_TEXT, "Officer Lookup").click()
+    assert self.driver.title == "Officer Lookup - Open SJPD"
+
     officer_select = self.driver.find_element(By.TAG_NAME, "input")
     officer_select.click()
     officer_select.send_keys('UNKNOWN')
@@ -93,8 +96,14 @@ class TestBasic():
     header = self.driver.find_element(By.TAG_NAME, "h1")
     assert header.text == 'Officer Unknown (#2864)'
 
+  def test_unusual_officers(self):
+    self.driver.find_element(By.PARTIAL_LINK_TEXT, "Unusual Officers").click()
+    assert self.driver.title == "Unusual Officers - Open SJPD"
+    self.check_exceptions()
+
   def test_beat_map(self):
     self.driver.find_element(By.PARTIAL_LINK_TEXT, "Beat Map").click()
+    assert self.driver.title == "Beat Map - Open SJPD"
     time.sleep(5)
     self.check_exceptions()
 
