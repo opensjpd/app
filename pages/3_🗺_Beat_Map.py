@@ -4,6 +4,8 @@ import geopandas as gpd
 import tables
 from streamlit_folium import folium_static
 
+st.set_page_config(page_title="Beat Map - Open SJPD", page_icon=":oncoming_police_car:", layout="wide")
+
 gdf = gpd.read_file('datasets/shapefiles/Police_Beat.shp')
 arrests = tables.arrests()
 
