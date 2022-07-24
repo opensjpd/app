@@ -17,3 +17,9 @@ jobs:
 
     - name: Run selenium pytest
       run: make test
+
+    - name: Archive test video
+      uses: actions/upload-artifact@v3
+      with:
+        name: selenium-video
+        path: /tmp/videos/selenium_video.mp4
