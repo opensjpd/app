@@ -24,9 +24,17 @@ class TestBasic():
   def check_exceptions(self):
     exceptions = self.driver.find_elements(By.CLASS_NAME, 'stException')
     assert len(exceptions) == 0, "Found exception: {}".format(exceptions[0].text)
+
+  # Go to a page and check basic things (title, exceptions)
+  def go_to_page(self, name):
+    self.driver.find_element(By.PARTIAL_LINK_TEXT, name).click()
+    time.sleep(5)
+    assert self.driver.title == f"{name} - Open SJPD"
+    self.check_exceptions()
   
   def test_home(self):
     assert self.driver.title == "Open SJPD"
+    # TODO expand
 
   def test_officer_lookup(self):
     officers = {
@@ -56,9 +64,7 @@ class TestBasic():
       }
     }
 
-    self.driver.find_element(By.PARTIAL_LINK_TEXT, "Officer Lookup").click()
-    assert self.driver.title == "Officer Lookup - Open SJPD"
-    self.check_exceptions()
+    self.go_to_page("Officer Lookup")
 
     for name, data in officers.items():
       self.driver.find_element(By.TAG_NAME, "input").click()
@@ -78,8 +84,7 @@ class TestBasic():
       assert len(self.driver.find_elements(By.TAG_NAME, "img")) == data['img'], f"Wrong number of graphs for {name}"
 
   def test_unknown_officer(self):
-    self.driver.find_element(By.PARTIAL_LINK_TEXT, "Officer Lookup").click()
-    assert self.driver.title == "Officer Lookup - Open SJPD"
+    self.go_to_page("Officer Lookup")
 
     officer_select = self.driver.find_element(By.TAG_NAME, "input")
     officer_select.click()
@@ -97,15 +102,10 @@ class TestBasic():
     assert header.text == 'Officer Unknown (#2864)'
 
   def test_unusual_officers(self):
-    self.driver.find_element(By.PARTIAL_LINK_TEXT, "Unusual Officers").click()
-    assert self.driver.title == "Unusual Officers - Open SJPD"
-    self.check_exceptions()
+    self.go_to_page("Unusual Officers")
 
   def test_beat_map(self):
-    self.driver.find_element(By.PARTIAL_LINK_TEXT, "Beat Map").click()
-    assert self.driver.title == "Beat Map - Open SJPD"
-    time.sleep(5)
-    self.check_exceptions()
+    self.go_to_page("Beat Map")
 
     race_select = self.driver.find_element(By.TAG_NAME, "input")
     race_select.click()
