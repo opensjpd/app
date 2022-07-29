@@ -33,7 +33,9 @@ class TestBasic():
     self.check_exceptions()
   
   def test_home(self):
+    time.sleep(5)
     assert self.driver.title == "Open SJPD"
+    self.check_exceptions()
     # TODO expand
 
   def test_officer_lookup(self):
